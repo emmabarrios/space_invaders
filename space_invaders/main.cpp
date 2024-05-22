@@ -1,7 +1,6 @@
 #include "raylib.h"
-#include "spaceship.h"
 #include "Game.h"
-#include "laser.h"
+
 
 int main() {
 	Color grey = {29,29,27,255};
@@ -23,7 +22,6 @@ int main() {
 		ClearBackground(grey);
 		
 		game.Draw();
-
 		EndDrawing();
 	}
 
