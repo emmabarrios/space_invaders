@@ -70,6 +70,15 @@ void Game::DeleteInactiveLasers() {
 			++ iterator;
 		}
 	}
+
+	for (auto iterator = alienLasers.begin(); iterator != alienLasers.end();) {
+		if (!iterator->active) {
+			iterator = alienLasers.erase(iterator);
+		}
+		else {
+			++iterator;
+		}
+	}
 }
 
 void Game::MoveAliens()
