@@ -2,6 +2,7 @@
 #include "spaceship.h"
 #include "obstacle.h"
 #include "alien.h"
+#include "mystery_ship.h"
 
 class Game {
 public:
@@ -12,6 +13,7 @@ public:
 	void HandleInput();
 private:
 	Spaceship spaceship;
+	MysteryShip mysteryShip;
 	void DeleteInactiveLasers();
 	void MoveAliens();
 	void MoveDownAliens(int distance);
@@ -24,5 +26,7 @@ private:
 	int alienDirection;
 	constexpr static float alienLaserShootInterval = 0.36;
 	float timeLastAlienFired;
+	float mysterShipSpawnInterval;
+	float timeLastSpawn;
 };
 
