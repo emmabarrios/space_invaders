@@ -18,6 +18,7 @@ private:
 	void MoveAliens();
 	void MoveDownAliens(int distance);
 	void AlienShootLaser();
+	void CheckForCollisions();
 	std::vector<Obstacle> obstacles;
 	std::vector<Obstacle> CreateObstacle();
 	std::vector<Alien> CreateAliens();

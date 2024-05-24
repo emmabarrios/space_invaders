@@ -60,6 +60,8 @@ void Game::Update() {
 
 	DeleteInactiveLasers();
 	mysteryShip.Update();
+
+	CheckForCollisions();
 }
 
 void Game::HandleInput() {
@@ -135,6 +137,98 @@ void Game::AlienShootLaser()
 		timeLastAlienFired = GetTime();
 	}
 	
+}
+
+void Game::CheckForCollisions()
+{
+	// Spaceship lasers
+	for (auto& laser : spaceship.lasers)
+	{
+		// we made an iterator and made it to point to the beginning of the aliens vector
+		auto iterator = aliens.begin();
+
+		while (iterator != aliens.end())
+		{
+			if (CheckCollisionRecs(iterator->GetRect(), laser.GetRect()))
+			{
+				// Removes the alien in which the iterator is pointing to, an updates the iterator to point to the next element of the vector
+				iterator = aliens.erase(iterator);
+				laser.active = false;
+			}
+			else {
+				++iterator;
+			}
+		}
+
+		for (auto& obstacle : obstacles) {
+			auto iterator = obstacle.blocks.begin();
+			
+			while (iterator!= obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(iterator->GetRect(),laser.GetRect()))
+				{
+					iterator = obstacle.blocks.erase(iterator);
+					laser.active = false;
+				}
+				else {
+					++iterator;
+				}
+			}
+		}
+
+		if (CheckCollisionRecs(mysteryShip.GetRect(), laser.GetRect()))
+		{
+			mysteryShip.alive = false;
+			laser.active = false;
+		}
+	}
+	
+	// Alien lasers
+	for (auto& laser : alienLasers) {
+		if (CheckCollisionRecs(laser.GetRect(), spaceship.GetRect()))
+		{
+			laser.active = false;
+		}
+
+		for (auto& obstacle : obstacles) {
+			auto iterator = obstacle.blocks.begin();
+
+			while (iterator != obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(iterator->GetRect(), laser.GetRect()))
+				{
+					iterator = obstacle.blocks.erase(iterator);
+					laser.active = false;
+				}
+				else {
+					++iterator;
+				}
+			}
+		}
+	}
+
+	// Alien collision with obstacle
+	for (auto& alien : aliens) {
+		for (auto& obstacle : obstacles) {
+			auto iterator = obstacle.blocks.begin();
+			while (iterator != obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(iterator->GetRect(), alien.GetRect()))
+				{
+					iterator = obstacle.blocks.erase(iterator); 
+				}
+				else {
+					iterator++;
+
+				}
+			}
+		}
+
+		if (CheckCollisionRecs(alien.GetRect(), spaceship.GetRect()))
+		{
+			return;
+		}
+	}
 }
 
 std::vector<Obstacle> Game::CreateObstacle()

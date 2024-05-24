@@ -35,3 +35,9 @@ void Spaceship::FireLaser() {
 		lastFireTime = GetTime();
 	}
 }
+
+Rectangle Spaceship::GetRect()
+{
+	// We have to cast the values because Rectangle expects floats
+	return {position.x, position.y, float(image.width), float(image.height)};
+}

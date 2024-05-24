@@ -12,7 +12,7 @@ public:
 	void MoveLeft();
 	void FireLaser();
 	std::vector<Laser> lasers;
-
+	Rectangle GetRect();
 private:
 	Texture2D image;
 	Vector2 position;
