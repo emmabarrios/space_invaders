@@ -3,6 +3,7 @@
 #include "obstacle.h"
 #include "alien.h"
 #include "mystery_ship.h"
+#include <iostream>
 
 class Game {
 public:
@@ -11,6 +12,7 @@ public:
 	void Draw();
 	void Update();
 	void HandleInput();
+	bool run;
 private:
 	Spaceship spaceship;
 	MysteryShip mysteryShip;
@@ -19,6 +21,9 @@ private:
 	void MoveDownAliens(int distance);
 	void AlienShootLaser();
 	void CheckForCollisions();
+	void GameOver();
+	void Reset();
+	void InitGame();
 	std::vector<Obstacle> obstacles;
 	std::vector<Obstacle> CreateObstacle();
 	std::vector<Alien> CreateAliens();
@@ -29,5 +34,6 @@ private:
 	float timeLastAlienFired;
 	float mysterShipSpawnInterval;
 	float timeLastSpawn;
+	int lives;
 };
 

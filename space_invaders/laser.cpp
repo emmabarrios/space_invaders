@@ -9,7 +9,9 @@ Laser::Laser(Vector2 position, int speed) {
 void Laser::Update() {
 	position.y += speed;
 	if (active) {
-		if (position.x > GetScreenHeight() || position.y < 0) {
+		// creo que esta linea es la que causa el bug de que al final a la derecha no se pueda disparar
+		//if (position.x > GetScreenHeight() || position.y < 0) {
+		if (position.y > GetScreenHeight() || position.y < 0) {
 			active = false;
 		}
 	}
