@@ -13,6 +13,8 @@ public:
 	void Update();
 	void HandleInput();
 	bool run;
+	int lives;
+
 private:
 	Spaceship spaceship;
 	MysteryShip mysteryShip;
@@ -34,6 +36,5 @@ private:
 	float timeLastAlienFired;
 	float mysterShipSpawnInterval;
 	float timeLastSpawn;
-	int lives;
 };
 

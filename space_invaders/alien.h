@@ -4,7 +4,7 @@
 class Alien {
 public:
 	Alien(int type, Vector2 position);
-	void Udate(int direction);
+	void Update(int direction);
 	void Draw();
 	int GetType();
 	static Texture2D alienImages[3];

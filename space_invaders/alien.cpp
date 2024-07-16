@@ -27,7 +27,7 @@ Alien::Alien(int type, Vector2 position)
 	}
 }
 
-void Alien::Udate(int direction)
+void Alien::Update(int direction)
 {
 	position.x += direction;
 }

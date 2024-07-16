@@ -105,13 +105,13 @@ void Game::DeleteInactiveLasers() {
 void Game::MoveAliens()
 {
 	for (auto& alien : aliens) {
-		alien.Udate(alienDirection);
+		alien.Update(alienDirection);
 
 		int position = alien.position.x;
 		int imageWidth = alien.alienImages[alien.type - 1].width;
 		int location = position + imageWidth;
 
-		if (position + imageWidth > GetScreenWidth() || position <= 0)
+		if (position + imageWidth > GetScreenWidth() -25 || position <= 25)
 		{
 			alienDirection *= -1;
 			MoveDownAliens(4);
@@ -269,7 +269,7 @@ std::vector<Obstacle> Game::CreateObstacle()
 	for (int i = 0; i < 4; i++)
 	{
 		float offsetX = (i + 1) * gap + i * obstacleWidth;
-		obstacles.push_back(Obstacle({ offsetX, float(GetScreenHeight() - 100) }));
+		obstacles.push_back(Obstacle({ offsetX, float(GetScreenHeight() - 200) }));
 	}
 
 	return obstacles;
