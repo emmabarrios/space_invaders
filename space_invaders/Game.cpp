@@ -1,11 +1,17 @@
 #include "Game.h"
+#include <fstream>
 
 Game::Game() {
+	music = LoadMusicStream("assets/sounds/music.ogg");
+	explosionSound = LoadSound("assets/sounds/explosion.ogg");
+	PlayMusicStream(music);
 	InitGame();
 }
 
 Game::~Game() {
 	Alien::UnloadImages();
+	UnloadMusicStream(music);
+	UnloadSound(explosionSound);
 }
 
 void Game::Draw() {
@@ -156,7 +162,20 @@ void Game::CheckForCollisions()
 		{
 			if (CheckCollisionRecs(iterator->GetRect(), laser.GetRect()))
 			{
-				// Removes the alien in which the iterator is pointing to, an updates the iterator to point to the next element of the vector
+				PlaySound(explosionSound);
+
+				if (iterator->type == 1) {
+					score += 100;
+				}
+				else if (iterator->type == 2) {
+					score += 200;
+				}
+				else if (iterator->type == 3) {
+					score += 300;
+				}
+
+				CheckForHighscore();
+
 				iterator = aliens.erase(iterator);
 				laser.active = false;
 			}
@@ -183,8 +202,11 @@ void Game::CheckForCollisions()
 
 		if (CheckCollisionRecs(mysteryShip.GetRect(), laser.GetRect()))
 		{
+			PlaySound(explosionSound);
 			mysteryShip.alive = false;
 			laser.active = false;
+			score += 500;
+			CheckForHighscore();
 		}
 	}
 	
@@ -260,6 +282,40 @@ void Game::InitGame() {
 	mysterShipSpawnInterval = GetRandomValue(10, 20);
 	lives = 3;
 	run = true;
+	score = 0;
+	//highscore = 0;
+	LoadGame(this);
+}
+
+void Game::CheckForHighscore() {
+	if (score > highscore) {
+		highscore = score;
+		SaveGame(highscore);
+	}
+}
+
+void Game::SaveGame(int highscore) {
+	std::ofstream gameSaveFile("gameSave.txt");
+	if (gameSaveFile.is_open()) {
+		gameSaveFile << highscore;
+		gameSaveFile.close();
+	}
+	else {
+		std::cerr << "Failed to save highscore to file" << std::endl;
+	}
+}
+
+void Game::LoadGame(Game* game) {
+	int loadedHighscore = 0;
+	std::ifstream gameSaveFile("gameSave.txt");
+	if (gameSaveFile.is_open()) {
+		gameSaveFile >> loadedHighscore;
+		gameSaveFile.close();
+	}
+	else {
+		std::cerr << "Failed to load highscore to file" << std::endl;
+	}
+	game->highscore = loadedHighscore;
 }
 
 std::vector<Obstacle> Game::CreateObstacle()

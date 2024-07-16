@@ -1,0 +1,4 @@
+* Add Game Over sound.
+* Add enemy explosion effect.
+* Make dead enemies drop lives and power, make it random and rare.
+* add "Power Bar" that will fill fill up with extra power items.

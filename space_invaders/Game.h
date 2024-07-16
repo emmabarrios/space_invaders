@@ -14,6 +14,9 @@ public:
 	void HandleInput();
 	bool run;
 	int lives;
+	int score;
+	int highscore;
+	Music music;
 
 private:
 	Spaceship spaceship;
@@ -26,6 +29,9 @@ private:
 	void GameOver();
 	void Reset();
 	void InitGame();
+	void CheckForHighscore();
+	void SaveGame(int highscore);
+	void LoadGame(Game* game);
 	std::vector<Obstacle> obstacles;
 	std::vector<Obstacle> CreateObstacle();
 	std::vector<Alien> CreateAliens();
@@ -36,5 +42,6 @@ private:
 	float timeLastAlienFired;
 	float mysterShipSpawnInterval;
 	float timeLastSpawn;
+	Sound explosionSound;
 };
 
